@@ -12,6 +12,15 @@ HAVING `num_insegnanti` > 1
 ORDER BY `num_insegnanti`  ASC;
 
 3. Calcolare la media dei voti di ogni appello d'esame
-
+SELECT AVG(`exam_student`.`vote`) as `media_voti`, `exam_student`.`exam_id`
+FROM `exam_student`
+GROUP BY `exam_student`.`exam_id`
+HAVING `media_voti` <=30  
+ORDER BY `media_voti`  DESC;
 
 4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+SELECT `department_id` AS `N°`, `departments`.`name` as `nome_dipartimento`, COUNT(*) AS `num_corsi_di_laurea`
+FROM `degrees`
+INNER JOIN `departments`
+ON `department_id` = `departments`.`id`
+GROUP BY `department_id`;

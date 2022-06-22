@@ -30,16 +30,21 @@ if ($result && $result->num_rows > 0) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dipartimento</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <?php foreach ($departments as $department) { ?>
-    <h1><?php echo $department->name; ?></h1>
-    <h3><?php echo $department->head_of_department; ?></h3>
-    <ul>
-      <?php foreach ($department->getInfo() as $key => $value) { ?>
-        <li><?php echo "$key: $value" ?></li>          
-      <?php } ?>
-    </ul>
+  <div class="container">
+    <?php foreach ($departments as $department) { ?>
+      <h1><?php echo $department->name; ?></h1>
+      <div class="card">
+        <h3><?php echo $department->head_of_department; ?></h3>
+        <ul>
+          <?php foreach ($department->getInfo() as $key => $value) { ?>
+            <li><?php echo "$key: $value" ?></li>          
+          <?php } ?>
+        </ul>
+      </div>
+    </div>
   <?php } ?>  
 </body>
 </html>

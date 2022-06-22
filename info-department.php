@@ -6,9 +6,12 @@ $id = $_GET["id"];
 $sql = "SELECT * FROM `departments` WHERE `id`=$id;";
 $result = $conn->query($sql);
 
+// prepariamo un array anche se andrà un solo elemento perchè più facile  da mmanipolare
 $departments = [];
 
+// creiamo un ciclo if else per avere riscontri di eventuali errori
 if ($result && $result->num_rows > 0) {
+  // se la query va bene, usiamo il ciclo while perchè non sappiamo il numero di iterazioni
   while ($row = $result->fetch_assoc()) {
     $curr_department = new Department($row["id"], $row["name"]);
     $curr_department->setInfo($row["address"], $row["phone"], $row["email"], $row["website"]);

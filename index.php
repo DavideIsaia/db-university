@@ -2,11 +2,16 @@
 require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/Department.php";
 
+// query 
 $sql = "SELECT `id`, `name` FROM `departments`;";
 $result = $conn->query($sql);
+
+// prepariamo un array
 $departments = [];
 
+// creiamo un ciclo if else per avere riscontri di eventuali errori
 if ($result && $result->num_rows > 0) {
+    // se la query va bene, usiamo il ciclo while perchè non sappiamo il numero di iterazioni
   while ($row = $result->fetch_assoc()) {
     $curr_department = new Department($row["id"], $row["name"]);
     $departments[] = $curr_department;

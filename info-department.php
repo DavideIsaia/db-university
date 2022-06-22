@@ -3,7 +3,7 @@ require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/Department.php";
 
 $id = $_GET["id"];
-$sql = "SELECT * FROM `departments` WHERE `id`=;";
+$sql = "SELECT * FROM `departments` WHERE `id`=$id;";
 $result = $conn->query($sql);
 
 $departments = [];
@@ -18,7 +18,7 @@ if ($result && $result->num_rows > 0) {
 } elseif ($result) {
   echo "Nessuna corrispondenza.";
 } else {
-  echo "Errore nella richiesta.";
+  echo "Errore nella query.";
   die();
 }
 ?>
@@ -32,9 +32,14 @@ if ($result && $result->num_rows > 0) {
   <title>Dipartimento</title>
 </head>
 <body>
-  <h1>Dipartimento</h1>
-  <h3>Direttore</h3>
-  <div>Info</div>
-  
+  <?php foreach ($departments as $department) { ?>
+    <h1><?php echo $department->name; ?></h1>
+    <h3><?php echo $department->head_of_department; ?></h3>
+    <ul>
+      <?php foreach ($department->getInfo() as $key => $value) { ?>
+        <li><?php echo "$key: $value" ?></li>          
+      <?php } ?>
+    </ul>
+  <?php } ?>  
 </body>
 </html>

@@ -2,13 +2,17 @@
 require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/Department.php";
 
-$sql = "SELECT `id`, `name` FROM `departments`;";
+$id = $_GET["id"];
+$sql = "SELECT * FROM `departments` WHERE `id`=;";
 $result = $conn->query($sql);
+
 $departments = [];
 
 if ($result && $result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
     $curr_department = new Department($row["id"], $row["name"]);
+    $curr_department->setInfo($row["address"], $row["phone"], $row["email"], $row["website"]);
+    $curr_department->head_of_department = $row["head_of_department"];
     $departments[] = $curr_department;
   }
 } elseif ($result) {
@@ -25,18 +29,12 @@ if ($result && $result->num_rows > 0) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dipartimenti Universitari</title>
+  <title>Dipartimento</title>
 </head>
-
 <body>
-  <h1>DIpartimenti Universitari</h1>
-
-  <?php foreach ($departments as $department) { ?>
-    <div>
-      <h2><?php echo $department->name; ?></h2>
-      <a href="info-department.php?id=<?php echo $department->id; ?>">Clicca qui per info dettagliate</a>
-    </div>
-  <?php }
-  ?>
+  <h1>Dipartimento</h1>
+  <h3>Direttore</h3>
+  <div>Info</div>
+  
 </body>
 </html>

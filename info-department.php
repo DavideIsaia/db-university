@@ -2,9 +2,15 @@
 require_once __DIR__ . "/database.php";
 require_once __DIR__ . "/Department.php";
 
+// per evitare sql injection dobbiamo evitare che possano venir scritti comandi sql dopo la query
+$stmt = $conn->prepare("SELECT * FROM `departments` WHERE `id`=?");
+// diciamo allo statement che deve accettare solo cifre e troncare eventuali caratteri estranei
+$stmt->bind_param("d", $id); 
 $id = $_GET["id"];
-$sql = "SELECT * FROM `departments` WHERE `id`=$id;";
-$result = $conn->query($sql);
+
+// adesso possiamo eseguire la query
+$stmt->execute();
+$result = $stmt->get_result();
 
 // prepariamo un array anche se andrà un solo elemento perchè più facile  da mmanipolare
 $departments = [];
@@ -47,7 +53,8 @@ if ($result && $result->num_rows > 0) {
           <?php } ?>
         </ul>
       </div>
-    </div>
-  <?php } ?>  
+    <?php } ?>
+    <a href="index.php">&larr; Torna alla Home</a>
+  </div>
 </body>
 </html>
